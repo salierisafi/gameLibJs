@@ -337,7 +337,7 @@ function renderJoyStick(name) {
 	if ('isAngle' in coverId) {
 		const sudutKhusus = coverId.isAngle;
 		for(let i=0;i<sudutKhusus.length;i++) {
-			if (!isAngle) return;
+			if (typeof isAngle === 'undefined') return;
 			let kondisi = isAngle(coverId.sudut,sudutKhusus[i].From,
 				sudutKhusus[i].To,"radian");
 			if (kondisi && Math.abs(jarakTitikBola) >= coverId.r) {
