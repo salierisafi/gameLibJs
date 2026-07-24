@@ -384,8 +384,10 @@ function editJoyStick(name, pilihan, tujuan) {
 		let angle = {};
 		if ('From' in tujuan) angle.From = tujuan.From;
 		else {console.error("From (Sudut awal) harus diisi"); return;}
-		if ('Run' in tujuan) angle.Run= tujuan.Run;
-		else {console.error("Run (Fungsi) harus diisi"); return;}
+		if ('Run' in tujuan || 'unRun' in tujuan) {
+			if ('Run' in tujuan) angle.Run= tujuan.Run; 
+			if ('unRun' in tujuan) angle.unRun= tujuan.unRun;
+		} else {console.error("Fungsi Run atau unRun harus diisi"); return;}
 		if ('To' in tujuan) angle.To = tujuan.To;
 		else angle.To = tujuan.From;
 		if (!coverId.isAngle) coverId.isAngle = [];
