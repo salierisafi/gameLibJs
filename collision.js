@@ -8,7 +8,8 @@ function isCollision(objek1, objek2, mode="check") {
 
 	let x1 = obj1.x; let y1 = obj1.y; let x2 = obj2.x; let y2 = obj2.y;
 
-	let sudut1 = obj1.sudut || 0; let sudut2 = obj2.sudut || 0;
+	let sudut1 = obj1.sudut * Math.PI /180 || 0; 
+	let sudut2 = obj2.sudut * Math.PI /180 || 0;
 
 	if (obj1.type == "circle" && obj2.type == "circle") {
 		let r1 = obj1.r ?? obj1.a; let r2 = obj2.r ?? obj2.a;
@@ -31,7 +32,7 @@ function isCollision(objek1, objek2, mode="check") {
 		let circ = obj1.type == "circle" ? obj1 : obj2;
 		let rect = obj1.type == "circle" ? obj2 : obj1;
 		let w = rect.a; let h = rect.b; let r = circ.r || circ.a;
-		let sudut = rect.sudut || 0;
+		let sudut = rect.sudut * Math.PI /180 || 0;
 		// Rotasi Vektor
 		let Ax = [Math.cos(sudut), Math.sin(sudut)];
 		let Ay = [-Math.sin(sudut), Math.cos(sudut)];
