@@ -8,6 +8,10 @@ Fitur :
 2. joystick
 3. deteksi bentuk
 4. auto reset saat alert
+5. Collision
+6. Movement
+7. Render objek dan gambar
+8. animasi
 
 
 Di bawah ini, adalah cara penggunaannya 
