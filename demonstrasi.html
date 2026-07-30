@@ -1,0 +1,183 @@
+<html>
+<head>
+</head>
+<body>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <style>
+       body {
+         overflow:hidden;
+         touch-action: none;
+         position:fixed;
+       }
+</style>
+<canvas id="kanvasGame"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/eruda" onload="eruda.init()"></script>
+
+  <!-- Import File Library Lokal -->
+    <script src="actor.js"></script>
+    <script src="joystick.js"></script>
+    <script src="physics.js"></script>
+    <script src="sprite.js"></script>
+<script>
+let kanvas =  document.getElementById("kanvasGame");
+kanvas.width = 1000;
+kanvas.height = 1500;
+let ctx = kanvas.getContext('2d');
+
+addCanvasToLib("kanvasGame"); // Daftarkan kanvas ke library
+
+let player = { //buat objek player
+        name:"player",
+        x:160,y:450,
+        w:12,h:12,
+        type:"rect",
+	border:true
+};
+
+
+let button = { //buat objek tombol ngegas
+        name:"button",
+	x:260,y:500,
+	a:40,b:20,
+        type:"rect",
+	click : ngegas,
+	unclick : normal
+};
+
+let obstekel = {
+	name:"obstekel",
+	x:200,y:50,
+	a:70,b:50,
+	type:"rect",
+	vy:0
+};
+
+let batasbawah = { //batas bawah, tidak dirender
+	name: "batasbawah",
+	x:160, y:600,
+	a:500, b:10,
+	type:"rect",
+	border:true
+};
+
+let proyektilbanyak = 0; //bamyak proyektil
+let munculkanproyektil = false; //fungsi munculkan proyektil jika ngegas ditekan
+
+function ngegas() {
+	editJoyStick("joyStick0","velocity",{vx:10,vy:10});
+	munculkanproyektil = true;
+}
+function normal() {      
+	editJoyStick("joyStick0","velocity",{vx:5,vy:5});
+	munculkanproyektil = false;
+}
+
+// tambahkan obejek menjadi elemen
+createElement(player);
+createElement(button);
+createElement(obstekel);
+createElement(batasbawah);
+
+createJoyStick(80,500,30); // buat joystick
+editJoyStick("joyStick0","attach","player"); // sambungkan joystick dengan playwr
+editJoyStick("joyStick0", "style", { //ubah style joystick
+            'bg-color': 'rgba(255, 255, 255, 0.2)',
+            'color': '#000000',
+            'bd-color': '#ffffff',
+            'border': 2
+});
+
+editJoyStick("joyStick0","velocity",{vx:5,vy:5}); //atur kecepatan awal
+
+let nyawaObst = 500; //nyawa sebuah obstekel
+
+let score = 0; //score
+
+function update() {
+	ctx.clearRect(0,0,kanvasGame.width,kanvasGame.height); //reset canvas
+
+	updateMovement(); // update pergerakan
+
+	// jika player dibawah, player bergerak, jika diatas,obstek bergerak
+	if (getProp("player","y") <200) {
+		editProp("player","y",200);
+		editProp("obstekel","vy",getJoyStick("joyStick0","joyVy"));
+	} else {
+		editProp("obstekel","vy",0);
+	}
+
+	// munculkan proyektil jika ngebut, tombol dipencet
+	if (munculkanproyektil) {
+		let nama = "proyektil" + proyektilbanyak;
+		let proyektil = {   
+			name:nama,
+			x:getProp("player","x"),  
+			y:getProp("player","y"),
+			a:2, b:2,
+			vx : getVelocityPartial(20,
+				-(getJoyStick("joyStick0","sudut")+Math.PI/2)+
+				(Math.random()-0.5)/3).vx,
+			vy : getVelocityPartial(20,
+				-(getJoyStick("joyStick0","sudut")+Math.PI/2)+
+				(Math.random()-0.5)/3).vy,
+			gravitasi:true
+		};
+		if (getJoyStick("joyStick0","sudut")) createElement(proyektil);
+		setTimeout(()=> {editProp(nama,"vy",5);editProp(nama,"vx",0);},700);
+		setTimeout(()=> editProp(nama,"vy",16),1000);
+		proyektilbanyak++;
+	}
+
+	// jika obstekel kena proyektil, nyawa obstekel berkurang,
+	// jika proyektil kena batas, hancur / hilang
+	for (let i = 0; i<= proyektilbanyak; i++) {
+		renderObjek("proyektil"+i);
+		if (isCollision("proyektil"+i,"obstekel")) nyawaObst--;
+		if (isCollision("proyektil"+i,"batasbawah")) deleteElement("proyektil"+i);
+	}
+
+	// jika nyawa obstekel habis, reset nyawa dan set posisi random,
+	if (nyawaObst < 0) {
+		nyawaObst = 500;
+		score++;
+		editProp("obstekel","y",-50);
+		editProp("obstekel","x",Math.random()*400);
+		editProp("obstekel","a",Math.random()*300);
+	}
+
+
+	// Rwndering
+	renderObjek("player");
+        renderObjek("button");
+	renderObjek("obstekel",`rgba(0,0,0, ${nyawaObst/600+1/6})`);
+	let sudutjoy = getJoyStick("joyStick0","sudut");
+	let xbox1 = getProp("player","x");
+	let ybox1 = getProp("player","y");
+	renderRect(xbox1-2.5,ybox1,5,20,sudutjoy,50,0);
+	renderJoyStick("joyStick0");
+	ctx.fillStyle = "black";
+        ctx.font = "40px Arial";
+        ctx.fillText("Score :"+score,100,650);
+
+
+	// Jika kalah alias playwr terkena obstekel
+	if (isCollision("player","obstekel")) {
+		alert("Kamu Kalah! Dengan Score : "+ score +".");
+		editProp("player","x",9000);
+		location.reload();
+	}
+
+	// jika obstekel mengenai bawah
+	if (isCollision("obstekel","batasbawah")) {
+		nyawaObst = 500;
+                editProp("obstekel","y",-50);
+                editProp("obstekel","x",Math.random()*400);
+                editProp("obstekel","a",Math.random()*300);
+        }
+
+	requestAnimationFrame(update);
+}
+update();
+</script>
+</body>
+</html>
