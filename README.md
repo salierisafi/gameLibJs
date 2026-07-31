@@ -227,6 +227,7 @@ Berikut adalah contoh implementasi sederhana dari setup dasar hingga *game loop*
     <script src="joystick.js"></script>
     <script src="physics.js"></script>
     <script src="sprite.js"></script>
+    <!--Atau daripada satu-satu, langsung jadi satu saja, src="gameLib.js"-->
   <script>
     // 1. Inisialisasi Canvas
     addCanvasToLib("canvasGame");
