@@ -49,7 +49,7 @@ Ada beberapa cara untuk pemasangannya:
 
 4. Pakai cdn, tapi langsung jadi satu
    ```html
-   <script src="https://cdn.jsdelivr.net/gh/salierisafi/gameLibJs@1.0.0/actor.js"></script
+   <script src="https://cdn.jsdelivr.net/gh/salierisafi/gameLibJs@1.0.0/actor.js"></script>
    ```
 ---
 
