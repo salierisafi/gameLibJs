@@ -53,6 +53,7 @@ function editProp(name,prop,val) {
 }
 
 function deleteElement(name) {
+	if (!name) elemenListGameLib1x = [];
 	const idx = elemenListGameLib1x.map(x=>x.name).indexOf(name);
 	elemenListGameLib1x.splice(idx,1);
 }
@@ -61,8 +62,7 @@ function deleteElement(name) {
 
 let globalClick1x = {};
 function globalClick(tipe,fungsi) {
-	globalClick1x[tipe] = fungsi;
-
+	 globalClick1x[tipe] = fungsi;
 }
 // deklarasi vriabel
 let mouseDragX1x; let mouseDragY1x;                           
