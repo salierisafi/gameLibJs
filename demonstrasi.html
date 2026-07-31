@@ -11,10 +11,9 @@
        }
 </style>
 <canvas id="kanvasGame"></canvas>
-<script src="https://cdn.jsdelivr.net/npm/eruda" onload="eruda.init()"></script>
 
   <!-- Import File Library Lokal -->
-    <script src="actor.js"></script>
+<script src="actor.js"></script>
     <script src="joystick.js"></script>
     <script src="physics.js"></script>
     <script src="sprite.js"></script>
@@ -60,16 +59,51 @@ let batasbawah = { //batas bawah, tidak dirender
 	border:true
 };
 
-let proyektilbanyak = 0; //bamyak proyektil
 let munculkanproyektil = false; //fungsi munculkan proyektil jika ngegas ditekan
+
+let partikel = {};
+function createPartikel(nama,banyak=1) {
+	let part = [];
+	for (let i = 0; i<banyak; i++) {
+		let namaId = "proyektil" + i;
+		let proyektil = {
+                        name:namaId,
+                        x:-99,y:-99,
+                        a:2, b:2
+                }; 
+		part.push(namaId);
+		createElement(proyektil);
+	}
+	partikel[nama] = part;
+}
+createPartikel("proyektil",50);
+
+let ngulang;
 
 function ngegas() {
 	editJoyStick("joyStick0","velocity",{vx:10,vy:10});
 	munculkanproyektil = true;
+	let i = 0;
+	ngulang = setInterval(()=> {
+		let nama = "proyektil" + i;
+		editProp(nama,"x",getProp("player","x"));
+		editProp(nama,"y",getProp("player","y"));
+		editProp(nama,"vx",getVelocityPartial(20,
+                                -(getJoyStick("joyStick0","sudut")+Math.PI/2)+
+                                (Math.random()-0.5)/3).vx);
+		editProp(nama,"vy",getVelocityPartial(20,
+                                -(getJoyStick("joyStick0","sudut")+Math.PI/2)+
+                                (Math.random()-0.5)/3).vy);
+		editProp(nama,"gravitasi",true);
+                setTimeout(()=> {editProp(nama,"vy",5);editProp(nama,"vx",0);},700);
+                setTimeout(()=> editProp(nama,"vy",16),1000);
+		i++;
+		if (i>= (partikel.proyektil).length) i=0;
+	},50);
 }
 function normal() {      
 	editJoyStick("joyStick0","velocity",{vx:5,vy:5});
-	munculkanproyektil = false;
+	clearInterval(ngulang);
 }
 
 // tambahkan obejek menjadi elemen
@@ -107,33 +141,20 @@ function update() {
 	}
 
 	// munculkan proyektil jika ngebut, tombol dipencet
-	if (munculkanproyektil) {
-		let nama = "proyektil" + proyektilbanyak;
-		let proyektil = {   
-			name:nama,
-			x:getProp("player","x"),  
-			y:getProp("player","y"),
-			a:2, b:2,
-			vx : getVelocityPartial(20,
-				-(getJoyStick("joyStick0","sudut")+Math.PI/2)+
-				(Math.random()-0.5)/3).vx,
-			vy : getVelocityPartial(20,
-				-(getJoyStick("joyStick0","sudut")+Math.PI/2)+
-				(Math.random()-0.5)/3).vy,
-			gravitasi:true
-		};
-		if (getJoyStick("joyStick0","sudut")) createElement(proyektil);
-		setTimeout(()=> {editProp(nama,"vy",5);editProp(nama,"vx",0);},700);
-		setTimeout(()=> editProp(nama,"vy",16),1000);
-		proyektilbanyak++;
-	}
+	
 
 	// jika obstekel kena proyektil, nyawa obstekel berkurang,
 	// jika proyektil kena batas, hancur / hilang
-	for (let i = 0; i<= proyektilbanyak; i++) {
-		renderObjek("proyektil"+i);
-		if (isCollision("proyektil"+i,"obstekel")) nyawaObst--;
-		if (isCollision("proyektil"+i,"batasbawah")) deleteElement("proyektil"+i);
+	for (let i = 0; i< (partikel.proyektil).length; i++) {
+		let nama = "proyektil" + i;
+		renderObjek(nama);
+		if (isCollision(nama,"obstekel")) nyawaObst--;
+		if (isCollision(nama,"batasbawah")) {
+			editProp(nama,"x",-99);
+			editProp(nama,"y",-99);
+			editProp(nama,"vx",0);
+			editProp(nama,"gravitasi",false);
+		}
 	}
 
 	// jika nyawa obstekel habis, reset nyawa dan set posisi random,
