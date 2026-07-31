@@ -59,7 +59,6 @@ let batasbawah = { //batas bawah, tidak dirender
 	border:true
 };
 
-let munculkanproyektil = false; //fungsi munculkan proyektil jika ngegas ditekan
 
 let partikel = {};
 function createPartikel(nama,banyak=1) {
@@ -82,7 +81,6 @@ let ngulang;
 
 function ngegas() {
 	editJoyStick("joyStick0","velocity",{vx:10,vy:10});
-	munculkanproyektil = true;
 	let i = 0;
 	ngulang = setInterval(()=> {
 		let nama = "proyektil" + i;
