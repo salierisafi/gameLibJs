@@ -192,6 +192,7 @@ editGravitation(9.8);
 editProp("player", "gravitasi", true);
 editProp("player", "vy", -5); // Melompat ke atas
 
+editProp("objek", "static", true); // digunakan untuk membuat objek tidak bergerak walaupun didorong oleh objek lain. Kalau tidak ditambahkan ini, maka objek yang Velocity nya lebih besar, dapat mendorong objek yang Velocity nya lebih kecil.
 ```
 
 ---
@@ -203,6 +204,8 @@ editProp("player", "vy", -5); // Melompat ke atas
 ```javascript
 // Merender persegi sederhana tanpa perlu membuat elemen
 renderRect(x, y, width, height, sudut, axisX, axisY, warna);
+// axisX dan axisY itu adalah titik sumbu untuk memutar sudut objek, memakai nilai persen.
+// 50, 50 ada di tengah tengah objek, 0,0 ada di ujung pojok kiri atas objek, dan 100,100 ada di pojok kanan bawah objek.
 
 // Merender elips/lingkaran sederhana
 renderEllipse(x, y, radiusA, radiusB, sudut, warna);
