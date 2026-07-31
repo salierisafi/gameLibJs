@@ -40,6 +40,17 @@ Ada beberapa cara untuk pemasangannya:
    ```
 
 3. Pakai cdn, tidak perlu install.
+   ```html
+   <script src="https://cdn.jsdelivr.net/gh/salierisafi/gameLibJs@1.0.0/actor.js"></script>
+   <script src="https://cdn.jsdelivr.net/gh/salierisafi/gameLibJs@1.0.0/physics.js"></script>
+   <script src="https://cdn.jsdelivr.net/gh/salierisafi/gameLibJs@1.0.0/sprite.js"></script>
+   <script src="https://cdn.jsdelivr.net/gh/salierisafi/gameLibJs@1.0.0/joystick.js"></script>
+   ```
+
+4. Pakai cdn, tapi langsung jadi satu
+   ```html
+   <script src="https://cdn.jsdelivr.net/gh/salierisafi/gameLibJs@1.0.0/actor.js"></script
+   ```
 ---
 
 ## 1. Inisialisasi & Pengaturan Canvas
