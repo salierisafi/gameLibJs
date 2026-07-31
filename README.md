@@ -14,10 +14,32 @@ Fitur :
 8. animasi
 
 
-Di bawah ini, adalah cara penggunaannya 
-(di sini, saya menggunakan AI)
+**Cara pemasangannya.**  
+Ada beberapa cara untuk pemasangannya:
+1. Install keempat library yang diperlukan seperti:
+   actor.js
+   physics.js
+   sprite.js
+   joystick.js
 
+   lalu di dalam skrip html nya, masukkan seperti ini di tag body.
+   ```html
+   <script src="actor.js"></script>
+   <script src="joystick.js"></script>
+   <script src="physics.js"></script>
+   <script src="sprite.js"></script>
+   ```
+   Cara ini agar bisa memilih langsung mana yang diperlukan, seperti, jika game tidak memerlukan JoyStick, maka hanya install 3 saja, yaitu
+   actor.js
+   physics.js
+   sprite.js
 
+2. Cara mudah dan langsung, install file yang bernama 'gameLib.js' saja yang isinya sudah mengandung keempat library. Cara memakai nya tinggal
+   ```html
+   <script src="gameLib.js"></script
+   ```
+
+3. Pakai cdn, tidak perlu install.
 ---
 
 ## 1. Inisialisasi & Pengaturan Canvas
