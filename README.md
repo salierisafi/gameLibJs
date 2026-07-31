@@ -223,8 +223,10 @@ Berikut adalah contoh implementasi sederhana dari setup dasar hingga *game loop*
   <canvas id="canvasGame" width="800" height="400"></canvas>
 
   <!-- Load script library Anda -->
-  <script src="gamelib1x.js"></script>
-
+   <script src="actor.js"></script>
+    <script src="joystick.js"></script>
+    <script src="physics.js"></script>
+    <script src="sprite.js"></script>
   <script>
     // 1. Inisialisasi Canvas
     addCanvasToLib("canvasGame");
