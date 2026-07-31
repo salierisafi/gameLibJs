@@ -14,7 +14,7 @@ Fitur :
 8. animasi
 
 
-**Cara pemasangannya.**  
+## Cara pemasangannya.  
 Ada beberapa cara untuk pemasangannya:
 1. Install keempat library yang diperlukan seperti:
    actor.js
@@ -52,13 +52,13 @@ Ada beberapa cara untuk pemasangannya:
    <script src="https://cdn.jsdelivr.net/gh/salierisafi/gameLibJs@1.0.0/gameLib.js"></script>
    ```
 ---
+Cara pemakaiannya 
+## 1. Inisialisasi canvas
 
-## 1. Inisialisasi & Pengaturan Canvas
-
-Sebelum membuat objek atau merender ke layar, hubungkan canvas HTML Anda ke pustaka ini.
+Hubungkan id canvas kamu dengan library menggunakan kode ini.
 
 ```javascript
-// Menghubungkan ID Canvas HTML ke pustaka
+// Menghubungkan ID Canvas HTML ke library
 addCanvasToLib('canvasGame');
 
 ```
@@ -67,8 +67,7 @@ addCanvasToLib('canvasGame');
 
 ## 2. Manajemen Elemen/Objek
 
-Elemen adalah objek utama dalam gim (pemain, musuh, rintangan, dll.).
-
+Elemen adalah objek utama dalam game.
 ### `createElement(object)`
 
 Menambahkan elemen baru ke dalam engine.
@@ -81,8 +80,7 @@ createElement({
   x: 100,
   y: 100,
   r: 20,          // Jari-jari (radius)
-  drag: true,      // Dapat digeser/drag
-  border: true,    // Punya batas collision
+  border: true,    // Punya batas collision, tidak bisa ditabrak dengan elemen lain yang bordernya juga true.
   click: () => console.log("Player diklik!")
 });
 
@@ -94,23 +92,23 @@ createElement({
   y: 200,
   w: 60,          // Width
   h: 40,          // Height
-  sudut: 45,       // Rotasi dalam derajat
-  border: true
+  drag: true,      // Dapat digeser/drag
+  sudut: 45       // Rotasi dalam derajat
 });
 
 ```
 
 ### Properti Lainnya:
 
-* `editProp(name, prop, val)`: Mengubah nilai properti dari objek tertentu.
-* `getProp(name, prop)`: Mengambil nilai properti dari objek tertentu.
-* `deleteElement(name)`: Menghapus objek berdasarkan nama.
+* `editProp(name, prop, val)`: Mengubah nilai properti dari objek tertentu berdasarkan nama.
+* `getProp(name, prop)`: Mengambil nilai properti dari objek tertentu berdasarkan nama.
+* `deleteElement(name)`: Menghapus objek berdasarkan nama. Jika nama tidak diisi, maka semua objek dihapus, digunakan untuk perpindahan scene, jangan sering dipakai karena membuat garbage collector kerja keras dan membuat game menjadi lambat.
 
 ---
 
-## 3. Sistem Interaksi & Drag
+## 3. Sistem Touch & Drag
 
-Engine ini sudah mendukung *Pointer Event* & *Touch Event* secara otomatis (termasuk multi-touch).
+Library sudah mendukung drag dan multitouch.
 
 ### Event Global Klik
 
@@ -129,7 +127,7 @@ globalClick('unclick', () => {
 
 ## 4. Sistem Joystick
 
-Engine ini menyediakan komponen Joystick bawaan untuk mengontrol objek secara analog.
+Library ini menyediakan komponen Joystick bawaan untuk mengontrol objek secara analog.
 
 ### Membuat Joystick: `createJoyStick(x, y, r)`
 
@@ -142,6 +140,10 @@ editJoyStick("joyStick0", "attach", "player");
 
 // Mengatur kecepatan pergerakan joystick
 editJoyStick("joyStick0", "velocity", { vx: 5, vy: 5 });
+// cara untuk membuat player bergerak mengikuti joystick hanya di sumbu x atau y saja, bisa mengisi vx dan vy nya yang tidak digunakan menjadi nol.
+// contohnya :
+// editJoyStick("joyStick0", "velocity", { vx: 5, vy: 0 });
+// hanya bergerak di sumbu X
 
 // Mengubah tampilan/style Joystick
 editJoyStick("joyStick0", "style", {
@@ -154,7 +156,7 @@ editJoyStick("joyStick0", "style", {
 
 ### Rendering Joystick
 
-Panggil fungsi `renderJoyStick()` di dalam *game loop* Anda:
+Tampilkan joystick, dengan menaruhnya dalam fungsi loop.
 
 ```javascript
 renderJoyStick("joyStick0");
