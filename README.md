@@ -21,6 +21,7 @@ Ada beberapa cara untuk pemasangannya:
    physics.js
    sprite.js
    joystick.js
+   audio.js
 
    lalu di dalam skrip html nya, masukkan seperti ini di tag body.
    ```html
@@ -28,28 +29,31 @@ Ada beberapa cara untuk pemasangannya:
    <script src="joystick.js"></script>
    <script src="physics.js"></script>
    <script src="sprite.js"></script>
+   <script src="audio.js"></script>
+   
    ```
    Cara ini agar bisa memilih langsung mana yang diperlukan, seperti, jika game tidak memerlukan JoyStick, maka hanya install 3 saja, yaitu
    actor.js
    physics.js
    sprite.js
 
-2. Cara mudah dan langsung, install file yang bernama 'gameLib.js' saja yang isinya sudah mengandung keempat library. Cara memakai nya tinggal
+3. Cara mudah dan langsung, install file yang bernama 'gameLib.js' saja yang isinya sudah mengandung keempat library. Cara memakai nya tinggal
    ```html
    <script src="gameLib.js"></script
    ```
 
-3. Pakai cdn, tidak perlu install.
+4. Pakai cdn, tidak perlu install.
    ```html
-   <script src="https://cdn.jsdelivr.net/gh/salierisafi/gameLibJs@1.0.0/actor.js"></script>
-   <script src="https://cdn.jsdelivr.net/gh/salierisafi/gameLibJs@1.0.0/physics.js"></script>
-   <script src="https://cdn.jsdelivr.net/gh/salierisafi/gameLibJs@1.0.0/sprite.js"></script>
-   <script src="https://cdn.jsdelivr.net/gh/salierisafi/gameLibJs@1.0.0/joystick.js"></script>
+   <script src="https://cdn.jsdelivr.net/gh/salierisafi/gameLibJs@1.0.1/actor.js"></script>
+   <script src="https://cdn.jsdelivr.net/gh/salierisafi/gameLibJs@1.0.1/physics.js"></script>
+   <script src="https://cdn.jsdelivr.net/gh/salierisafi/gameLibJs@1.0.1/sprite.js"></script>
+   <script src="https://cdn.jsdelivr.net/gh/salierisafi/gameLibJs@1.0.1/joystick.js"></script>
+   <script src="https://cdn.jsdelivr.net/gh/salierisafi/gameLibJs@1.0.1/audio.js"></script>
    ```
 
-4. Pakai cdn, tapi langsung jadi satu
+5. Pakai cdn, tapi langsung jadi satu
    ```html
-   <script src="https://cdn.jsdelivr.net/gh/salierisafi/gameLibJs@1.0.0/gameLib.js"></script>
+   <script src="https://cdn.jsdelivr.net/gh/salierisafi/gameLibJs@1.0.1/gameLib.js"></script>
    ```
 ---
 Cara pemakaiannya 
@@ -265,6 +269,7 @@ Berikut adalah contoh implementasi sederhana dari setup dasar hingga *game loop*
     <script src="joystick.js"></script>
     <script src="physics.js"></script>
     <script src="sprite.js"></script>
+    <script src="audio.js"></script>
     <!--Atau daripada satu-satu, langsung jadi satu saja, src="gameLib.js"-->
   <script>
     // 1. Inisialisasi Canvas
