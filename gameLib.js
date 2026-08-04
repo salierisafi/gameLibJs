@@ -748,4 +748,51 @@ function renderAnimation(nameAnm, nameObjek, interval=1, flipX=false, flipY=fals
 	renderImg(anm.img,nameObjek,anm.idxArr[index],flipX,flipY);
 	anm.detik++;
 	if (anm.detik >= interval*60*(anm.idxArr).length) anm.detik =0;
+} 
+
+// ======================================================
+//Buat Audio.js
+
+
+
+let audioListGameLib1x = [];
+function addAudioToLib(link,name,volume=100) {
+	if(!link || !name) {
+		console.error("Masukan tautan dan nama!");
+		return;
+	}
+	const audio = document.createElement('audio');
+	audio.src = link;
+	document.body.appendChild(audio);
+	const audioCtx = new (window.AudioContext ||
+		window.webkitAudioContext) ();
+	const source = audioCtx.createMediaElementSource(audio);
+	const gainNode = audioCtx.createGain();
+	source.connect(gainNode);
+	gainNode.connect(audioCtx.destination);
+	gainNode.gain.value = volume/100;
+	const map = {
+		name:name,
+		source:audio,
+		context:audioCtx,
+		gain:gainNode,
+		volume:volume
+	};
+	audioListGameLib1x.push(map);
+
+}
+function editVolume(name,volume) {
+	 if(!name || !volume) {
+                console.error("Masukan nama dan Volume");
+                return;
+        }
+	const audio = audioListGameLib1x[audioListGameLib1x.map(x=>x.name).indexOf(name)];
+	if (volume < 0) volume = 0;
+	audio.gain.gain.value = volume/100;
+}
+function getAudio(name) {
+	if (!name) return false;
+	const audio = audioListGameLib1x[audioListGameLib1x.map(x=>x.name).indexOf(name)];
+	if (audio.context === 'suspended') audio.context.resume();
+	return audio.source;
 }
