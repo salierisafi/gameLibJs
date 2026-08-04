@@ -245,8 +245,20 @@ renderAnimation('walkRight', 'player', 0.1, false, false);
 ```
 
 ---
+## 7. Sistem Audio
 
-## 7. Contoh Penggunaan Lengkap
+Sebenarnya hanya skrip pembantu untuk memunculkan audio. Pengelolaan audio menggunakan fungsi bawaan javascript saja, karena memang banyak sekali.
+
+```javascript
+addAudioToLib("bell.mp3","suarabel"); // menambahkan audio ke library
+
+editVolume("suarabel",50); // atur suara ke 50% alias 0.5
+
+getAudio("suarabel").play(); // memainkan Audio, menggunakan perintah javascript bawaan untuk audio seperti play(), pause(), cloneNode(), dan semacamnya.
+
+```
+
+## 8. Contoh Penggunaan Lengkap
 
 Berikut adalah contoh implementasi sederhana dari setup dasar hingga *game loop*:
 
